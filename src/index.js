@@ -123,9 +123,29 @@ const subtract = (arg1, arg2) => {
     toSubtract = -arg2;
   }
 
-  console.log(arg1);
-  console.log(toSubtract);
   return add(arg1, toSubtract);
+};
+
+const transpose = matrix => {
+  let isMatrix = matrix[0] instanceof Array;
+
+  if(isMatrix){
+    let result = [];
+    for(let col = 0; col < matrix[0].length; col++){
+
+      let newRow = [];
+      for(let row = 0; row < matrix.length; row++){
+        newRow.push(matrix[row][col]);
+      }
+
+      result.push(newRow);
+    }
+
+    return result;
+  } else{
+    return matrix.map(el => [el]);
+  }
+
 };
 
 module.exports = {
@@ -133,5 +153,6 @@ module.exports = {
   elementTransform: elementTransform,
   matrixElementCalc: matrixElementCalc,
   multiply: multiply,
-  subtract: subtract
+  subtract: subtract,
+  transpose: transpose
 };
