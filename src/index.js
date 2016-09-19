@@ -1,21 +1,44 @@
 const util = require('./util.js');
 
+const matrixElementCalc = (matrix1, matrix2, callback) => {
+  let dimMatch = util.verifyDimensions(matrix1, matrix2);
+
+  if(dimMatch && matrix1[0] instanceof Array){
+    let result = [];
+    matrix1.forEach((row, rowIdx) => {
+      let newRow = row.map((el, idx) => {
+        return callback(el, matrix2[rowIdx][idx]);
+      });
+      result.push(newRow);
+    });
+    return result;
+  }else if (dimMatch){
+    return matrix1.map((el, idx) => callback(el, matrix2[idx]));
+  } else{
+    throw 'can not peform arithmetic on matrices';
+  }
+};
+
+const elementTransform = (matrix, callback) => {
+  if(matrix[0] instanceof Array){
+    let result = [];
+    matrix.forEach(row => {
+      let newRow = row.map(el => callback(el));
+      result.push(newRow);
+    });
+
+    return result;
+  } else{
+    return matrix.map(el => callback(el));
+  }
+};
 
 const add = (arg1, arg2) => {
   if(arg1 instanceof Array && arg2 instanceof Array){
     let dimMatch = util.verifyDimensions(arg1, arg2);
 
     if(dimMatch && arg1[0] instanceof Array){
-      let result = [];
-      arg1.forEach((row, rowIdx) => {
-        let newRow = [];
-        row.forEach((el, colIdx) => {
-          newRow.push(el + arg2[rowIdx][colIdx]);
-        });
-
-        result.push(newRow);
-      });
-      return result;
+      return matrixElementCalc(arg1, arg2, (el1, el2) => el1 + el2);
     } else if (dimMatch){
       return arg1.map((el, idx) => el + arg2[idx]);
     }
@@ -23,31 +46,15 @@ const add = (arg1, arg2) => {
       throw 'matrices must have matching dimensions';
     }
   } else if (arg1 instanceof Array && typeof arg2 === 'number'){
-    if(arg1[0] instanceof Array){
-      let newArr = [];
-      arg1.forEach(row => {
-        newArr.push(row.map(el => el + arg2));
-      });
-      return newArr;
-    } else{
-      return arg1.map(el => el + arg2);
-    }
+    return elementTransform(arg1, (el1) => el1 + arg2);
   } else if (typeof arg1 === 'number' && arg2 instanceof Array) {
-    if(arg2[0] instanceof Array){
-      let newArr = [];
-      arg2.forEach(row => {
-        newArr.push(row.map(el => el + arg1));
-      });
-      return newArr;
-    } else{
-      return arg2.map(el => el + arg1);
-    }
+    return elementTransform(arg2, (el1) => el1 + arg1);
   } else if (typeof arg1 === 'number' && typeof arg2 === 'number') {
     return arg1 + arg2;
   } else {
     throw "args must be numbers and matrices or matrices of matching size";
   }
-}
+};
 
 const multiply = (arg1, arg2) => {
   if(arg1 instanceof Array && arg2 instanceof Array){
@@ -83,7 +90,6 @@ const multiply = (arg1, arg2) => {
         arg2.forEach(row => {
           col.push(row[i]);
         });
-
         result.push(util.multRowCol(arg1, col));
       }
 
@@ -94,64 +100,13 @@ const multiply = (arg1, arg2) => {
       throw 'matrices can not be multiplied';
     }
   } else if (arg1 instanceof Array && typeof arg2 === 'number'){
-    if(arg1[0] instanceof Array){
-      let result = [];
-      arg1.forEach(row => {
-        let newRow = row.map(el => el * arg2);
-        result.push(newRow);
-      });
-      return result;
-    } else{
-      return arg1.map(el => el * arg2);
-    }
+    return elementTransform(arg1, (el1) => el1 * arg2);
   } else if (typeof arg1 === 'number' && arg2 instanceof Array) {
-    if(arg2[0] instanceof Array){
-      let result = [];
-      arg2.forEach(row => {
-        let newRow = row.map(el => el * arg1);
-        result.push(newRow);
-      });
-      return result;
-    } else{
-      return arg2.map(el => el * arg1);
-    }
+    return elementTransform(arg2, (el1) => el1 * arg1);
   } else if (typeof arg1 === 'number' && typeof arg2 === 'number') {
     return arg1 * arg2;
   } else {
-    throw "args must be compatible";
-  }
-}
-
-const elementTransform = (matrix, callback) => {
-  if(matrix[0] instanceof Array){
-    let result = [];
-    matrix.forEach(row => {
-      let newRow = row.map(el => callback(el));
-      result.push(newRow);
-    });
-
-    return result;
-  } else{
-    return matrix.map(el => callback(el));
-  }
-};
-
-const matrixElementCalc = (matrix1, matrix2, callback) => {
-  let dimMatch = util.verifyDimensions(matrix1, matrix2);
-
-  if(dimMatch && matrix1[0] instanceof Array){
-    let result = [];
-    matrix1.forEach((row, rowIdx) => {
-      let newRow = row.map((el, idx) => {
-        return callback(el, matrix2[rowIdx][idx]);
-      });
-      result.push(newRow);
-    });
-    return result;
-  }else if (dimMatch){
-    return matrix1.map((el, idx) => callback(el, matrix2[idx]));
-  } else{
-    throw 'can not peform arithmetic on matrices';
+    throw "Arguments cannot be multiplied";
   }
 };
 
@@ -172,7 +127,6 @@ const subtract = (arg1, arg2) => {
   console.log(toSubtract);
   return add(arg1, toSubtract);
 };
-
 
 module.exports = {
   add: add,
