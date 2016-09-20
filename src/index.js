@@ -116,7 +116,6 @@ const subtract = (arg1, arg2) => {
   } else if(arg2 instanceof Array && arg2[0] instanceof Array){
 
     toSubtract = elementTransform(arg2, el => -el);
-    console.log(toSubtract);
   } else if (arg2 instanceof Array) {
     toSubtract = arg2.map(el => -el);
   } else{

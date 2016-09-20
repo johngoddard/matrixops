@@ -1,8 +1,12 @@
 {
   "name": "matrixops",
-  "version": "1.1.4",
+  "version": "1.1.8",
   "description": "A package for doing matrix arithmetic with JavaScript arrays",
   "main": "./distribution/index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/johngoddard/matrixops.git"
+  },
   "scripts": {
     "test": "jest",
     "build": "babel src --presets babel-preset-es2015 --out-dir distribution",
