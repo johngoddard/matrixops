@@ -3,7 +3,7 @@
 MatrixOps is an npm packgage that makes performing matrix operations on 2 dimensional JavaScript.
 
 ## Methods
-### Add
+### #add
 
 Accepts 2-dimensional arrays, 1-dimensional arrays, and numbers, and adds them together, returning a new array.
 
