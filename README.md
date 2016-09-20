@@ -1,6 +1,6 @@
 #MatrixOps
 
-MatrixOps is an npm packgage that makes performing matrix operations on 2 dimensional JavaScript.
+MatrixOps is an npm packgage that makes performing matrix operations on 2 dimensional JavaScript arrays simple. 
 
 ## Usage
 ### #add
