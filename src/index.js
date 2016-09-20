@@ -144,11 +144,28 @@ const transpose = matrix => {
 
 };
 
+const zeroes = (rows, cols) => {
+  const columns = cols || 1;
+  let result = [];
+
+  for(let i = 0; i < rows; i++){
+    let newRow = [];
+    for(let j = 0; j < columns; j++){
+      newRow.push(0);
+    }
+    result.push(newRow);
+  }
+  
+  return result;
+};
+
+
 module.exports = {
   add: add,
   elementTransform: elementTransform,
   matrixElementCalc: matrixElementCalc,
   multiply: multiply,
   subtract: subtract,
-  transpose: transpose
+  transpose: transpose,
+  zeroes: zeroes
 };

@@ -79,3 +79,15 @@ Accepts 2 arrays with the same dimensions and a callback, and applies the callba
   operator.matrixElementCalc([1,2,3], [1,2,3], (el1, el2) => el1 * el2);
   // => [[1,4,9]
 ```
+
+### #zeroes
+
+Accepts 1 or 2 numbers and returns an array of zeroes with the specified dimensions
+
+```JavaScript
+  operator.zeroes(2, 3);
+  // => [[0,0,0],[0,0,0]]
+
+  operator.zeroes(2));
+  // => [[0],[0]]
+```
