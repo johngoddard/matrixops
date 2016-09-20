@@ -91,3 +91,15 @@ Accepts 1 or 2 numbers and returns an array of zeroes with the specified dimensi
   MatrixOps.zeroes(2));
   // => [[0],[0]]
 ```
+
+### #ones
+
+Accepts 1 or 2 numbers and returns an array of ones with the specified dimensions
+
+```JavaScript
+  MatrixOps.ones(2, 3);
+  // => [[1,1,1],[1,1,1]]
+
+  MatrixOps.ones(2));
+  // => [[1],[1]]
+```
