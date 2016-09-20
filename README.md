@@ -2,7 +2,7 @@
 
 MatrixOps is an npm packgage that makes performing matrix operations on 2 dimensional JavaScript.
 
-## Methods
+## Usage
 ### #add
 
 Accepts 2-dimensional arrays, 1-dimensional arrays, and numbers, and adds them together, returning a new array.
@@ -17,7 +17,7 @@ Accepts 2-dimensional arrays, 1-dimensional arrays, and numbers, and adds them t
   // => [[2,4],[6,8]]
 ```
 
-### subtract
+### #subtract
 
 Accepts 2-dimensional arrays, 1-dimensional arrays, and numbers, and subtracts the second argument from the first, returning a new array.
 
@@ -29,7 +29,7 @@ Accepts 2-dimensional arrays, 1-dimensional arrays, and numbers, and subtracts t
   // => [2, 2]
 ```
 
-### multiply
+### #multiply
 
 2-dimensional arrays, 1-dimensional arrays, and numbers, and multiplies them together, returning a new array.
 
@@ -44,7 +44,7 @@ Accepts 2-dimensional arrays, 1-dimensional arrays, and numbers, and subtracts t
   // => [[2,4],[6,8]]
 ```
 
-### transpose
+### #transpose
 
 Accepts a 1 or 2 dimensional array and returns the transpose.
 
@@ -56,7 +56,7 @@ Accepts a 1 or 2 dimensional array and returns the transpose.
   // => [[1,3,5],[2,4,6]]
 ```
 
-### elementTransform
+### #elementTransform
 
 Accepts a 1 or dimensional array and a callback function, and applies the callback to every element of the array.
 
@@ -68,7 +68,7 @@ Accepts a 1 or dimensional array and a callback function, and applies the callba
   // => [[1,4],[9,16]]
 ```
 
-### matrixElementCalc
+### #matrixElementCalc
 
 Accepts 2 arrays with the same dimensions and a callback, and applies the callback pairs of elements at the same indices in the two arrays.
 
