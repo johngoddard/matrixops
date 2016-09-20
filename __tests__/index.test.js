@@ -69,6 +69,10 @@ test('subtracts vectors', () => {
   expect(operator.subtract([3,4],[1,2])).toEqual([2, 2]);
 });
 
+test('subtracts column vectors', () => {
+  expect(operator.subtract([[3],[7]], [[5],[12]])).toEqual([[-2], [-5]]);
+});
+
 test('transpose vector', () => {
   expect(operator.transpose([1,2,3])).toEqual([[1],[2],[3]]);
 });
@@ -83,4 +87,12 @@ test('create zeroes matrix', () => {
 
 test('create zeroes matrix, 1 arg', () => {
   expect(operator.zeroes(2)).toEqual([[0],[0]]);
+});
+
+test('create ones matrix', () => {
+  expect(operator.ones(2, 3)).toEqual([[1,1,1],[1,1,1]]);
+});
+
+test('create ones matrix, 1 arg', () => {
+  expect(operator.ones(2)).toEqual([[1],[1]]);
 });

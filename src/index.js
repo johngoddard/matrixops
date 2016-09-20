@@ -114,7 +114,9 @@ const subtract = (arg1, arg2) => {
   if(!(arg1 instanceof Array) && arg2 instanceof Array){
     throw 'cannot not subtract matrix from scalar';
   } else if(arg2 instanceof Array && arg2[0] instanceof Array){
-    toSubtract = elementTransform(arg1, el => -el);
+
+    toSubtract = elementTransform(arg2, el => -el);
+    console.log(toSubtract);
   } else if (arg2 instanceof Array) {
     toSubtract = arg2.map(el => -el);
   } else{
@@ -144,20 +146,33 @@ const transpose = matrix => {
 
 };
 
-const zeroes = (rows, cols) => {
-  const columns = cols || 1;
+
+const valMatrix = (rows, cols, val) => {
+
   let result = [];
 
   for(let i = 0; i < rows; i++){
     let newRow = [];
-    for(let j = 0; j < columns; j++){
-      newRow.push(0);
+    for(let j = 0; j < cols; j++){
+      newRow.push(val);
     }
     result.push(newRow);
   }
-  
+
   return result;
 };
+
+const zeroes = (rows, cols) => {
+  const columns = cols || 1;
+  return valMatrix(rows, columns, 0);
+};
+
+const ones = (rows, cols) => {
+  const columns = cols || 1;
+  return valMatrix(rows, columns, 1);
+};
+
+
 
 
 module.exports = {
@@ -167,5 +182,6 @@ module.exports = {
   multiply: multiply,
   subtract: subtract,
   transpose: transpose,
-  zeroes: zeroes
+  zeroes: zeroes,
+  ones: ones
 };
