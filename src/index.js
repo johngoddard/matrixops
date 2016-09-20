@@ -45,14 +45,12 @@ const add = (arg1, arg2) => {
     else{
       throw 'matrices must have matching dimensions';
     }
-  } else if (arg1 instanceof Array && typeof arg2 === 'number'){
+  } else if (arg1 instanceof Array){
     return elementTransform(arg1, (el1) => el1 + arg2);
-  } else if (typeof arg1 === 'number' && arg2 instanceof Array) {
+  } else if (arg2 instanceof Array) {
     return elementTransform(arg2, (el1) => el1 + arg1);
-  } else if (typeof arg1 === 'number' && typeof arg2 === 'number') {
-    return arg1 + arg2;
   } else {
-    throw "args must be numbers and matrices or matrices of matching size";
+    return arg1 + arg2;
   }
 };
 
@@ -99,9 +97,9 @@ const multiply = (arg1, arg2) => {
     } else {
       throw 'matrices can not be multiplied';
     }
-  } else if (arg1 instanceof Array && typeof arg2 === 'number'){
+  } else if (arg1 instanceof Array){
     return elementTransform(arg1, (el1) => el1 * arg2);
-  } else if (typeof arg1 === 'number' && arg2 instanceof Array) {
+  } else if (arg2 instanceof Array) {
     return elementTransform(arg2, (el1) => el1 * arg1);
   } else if (typeof arg1 === 'number' && typeof arg2 === 'number') {
     return arg1 * arg2;
@@ -137,10 +135,8 @@ const transpose = matrix => {
       for(let row = 0; row < matrix.length; row++){
         newRow.push(matrix[row][col]);
       }
-
       result.push(newRow);
     }
-
     return result;
   } else{
     return matrix.map(el => [el]);
