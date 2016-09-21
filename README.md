@@ -58,7 +58,7 @@ Accepts a 1 or 2 dimensional array and returns the transpose.
 
 ### #elementTransform
 
-Accepts a 1 or dimensional array and a callback function, and applies the callback to every element of the array.
+Accepts a 1 or multi-dimensional array and a callback function, and applies the callback to every element of the array.
 
 ```JavaScript
   MatrixOps.elementTransform([[1,2],[3,4]], el => el * 2);

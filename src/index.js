@@ -171,6 +171,20 @@ const ones = (rows, cols) => {
   return valMatrix(rows, columns, 1);
 };
 
+const identity = num => {
+  let identityMatrix = [];
+  for(let row = 0; row < num; row++){
+    let newRow = [];
+    for(let col = 0; col < num; col++){
+      let toPush = col === row ? 1 : 0;
+      newRow.push(toPush);
+    }
+
+    identityMatrix.push(newRow);
+  }
+
+  return identityMatrix;
+};
 
 
 
@@ -182,5 +196,6 @@ module.exports = {
   subtract: subtract,
   transpose: transpose,
   zeroes: zeroes,
-  ones: ones
+  ones: ones,
+  identity: identity
 };

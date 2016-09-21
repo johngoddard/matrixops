@@ -96,3 +96,11 @@ test('create ones matrix', () => {
 test('create ones matrix, 1 arg', () => {
   expect(operator.ones(2)).toEqual([[1],[1]]);
 });
+
+test('creates identityMatrix matrix with 1 row', () => {
+  expect(operator.identity(1)).toEqual([[1]]);
+});
+
+test('creates identityMatrix matrix with multiple rows', () => {
+  expect(operator.identity(3)).toEqual([[1,0,0],[0,1,0],[0,0,1]]);
+});
