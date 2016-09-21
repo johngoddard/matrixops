@@ -103,3 +103,12 @@ Accepts 1 or 2 numbers and returns an array of ones with the specified dimension
   MatrixOps.ones(2));
   // => [[1],[1]]
 ```
+
+### #identity
+
+Accepts a number n and returns an n x n identity matrix
+
+```JavaScript
+  MatrixOps.identity(3);
+  // => [[1,0,0],[0,1,0],[0,0,1]]
+```
