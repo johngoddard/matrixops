@@ -75,7 +75,7 @@ Accepts a 1 or multi-dimensional array and a callback function, and applies the 
 
 ### #matrixElementCalc
 
-Accepts 2 arrays with the same dimensions and a callback, and applies the callback pairs of elements at the same indices in the two arrays.The callback function accepts up to 4 arguments: the matrix 1 element at the position, the matrix 2 element at the position, the row index, and the column index.
+Accepts 2 arrays with the same dimensions and a callback, and applies the callback to pairs of elements at the same indices in the two arrays.The callback function accepts up to 4 arguments: the matrix 1 element at the position, the matrix 2 element at the position, the row index, and the column index.
 
 ```JavaScript
   MatrixOps.matrixElementCalc([[1,2],[3,4]], [[1,2],[3,4]], (el1, el2) => el1 * el2);
