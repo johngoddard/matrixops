@@ -58,7 +58,7 @@ Accepts a 1 or 2 dimensional array and returns the transpose.
 
 ### #elementTransform
 
-Accepts a 1 or multi-dimensional array and a callback function, and applies the callback to every element of the array.
+Accepts a 1 or multi-dimensional array and a callback function, and applies the callback to every element of the array. The callback function accepts up to 3 arguments: the element, the row index, and the column index.
 
 ```JavaScript
   MatrixOps.elementTransform([[1,2],[3,4]], el => el * 2);
@@ -66,11 +66,16 @@ Accepts a 1 or multi-dimensional array and a callback function, and applies the 
 
   MatrixOps.elementTransform([[1,2],[3,4]], el => Math.pow(el, 2));
   // => [[1,4],[9,16]]
+
+  MatrixOps.elementTransform([[1,2],[3,4]], (el, row, col) => {
+    return el * 2 + col + row;
+  });
+  // => [[2,5],[7,10]]
 ```
 
 ### #matrixElementCalc
 
-Accepts 2 arrays with the same dimensions and a callback, and applies the callback pairs of elements at the same indices in the two arrays.
+Accepts 2 arrays with the same dimensions and a callback, and applies the callback pairs of elements at the same indices in the two arrays.The callback function accepts up to 4 arguments: the matrix 1 element at the position, the matrix 2 element at the position, the row index, and the column index.
 
 ```JavaScript
   MatrixOps.matrixElementCalc([[1,2],[3,4]], [[1,2],[3,4]], (el1, el2) => el1 * el2);
@@ -78,6 +83,11 @@ Accepts 2 arrays with the same dimensions and a callback, and applies the callba
 
   MatrixOps.matrixElementCalc([1,2,3], [1,2,3], (el1, el2) => el1 * el2);
   // => [[1,4,9]
+
+  MatrixOps.matrixElementCalc([[1,2],[3,4]], [[1,2],[3,4]], (el1, el2, row, col) => {
+    return el1 * el2 + row + col;
+  });
+  // => [[1,5],[10,18]]
 ```
 
 ### #zeroes

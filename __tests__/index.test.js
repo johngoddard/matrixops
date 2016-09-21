@@ -40,8 +40,16 @@ test('pointwise multiplication matrix', () => {
   expect(operator.elementTransform([[1,2],[3,4]], el => el * 2)).toEqual([[2,4],[6,8]]);
 });
 
+test('pointwise multiplication matrix - with indexes', () => {
+  expect(operator.elementTransform([[1,2],[3,4]], (el, row, col) => (el * 2 + col + row))).toEqual([[2,5],[7,10]]);
+});
+
 test('pointwise multiplication vector', () => {
   expect(operator.elementTransform([1,2,3], el => el * 2)).toEqual([2,4,6]);
+});
+
+test('pointwise multiplication vector - with index', () => {
+  expect(operator.elementTransform([1,2,3], (el, idx) => el * 2 + idx)).toEqual([2,5,8]);
 });
 
 test('pointwise raising matrix', () => {
@@ -52,8 +60,20 @@ test('2 matrix pointwise multiplication', () => {
   expect(operator.matrixElementCalc([[1,2],[3,4]], [[1,2],[3,4]], (el1, el2) => el1 * el2)).toEqual([[1,4],[9,16]]);
 });
 
+test('2 matrix pointwise multiplication - with index', () => {
+  expect(operator.matrixElementCalc([[1,2],[3,4]], [[1,2],[3,4]], (el1, el2, row, col) => el1 * el2 + row + col)).toEqual([[1,5],[10,18]]);
+});
+
 test('2 vector pointwise multiplication', () => {
   expect(operator.matrixElementCalc([1,2,3], [1,2,3], (el1, el2) => el1 * el2)).toEqual([1,4,9]);
+});
+
+test('2 vector pointwise multiplication - with index', () => {
+  expect(operator.matrixElementCalc([1,2,3], [1,2,3], (el1, el2, idx) => el1 * el2 + idx)).toEqual([1,5,11]);
+});
+
+test('pointwise raising matrix', () => {
+  expect(operator.elementTransform([[1,2],[3,4]], el => Math.pow(el, 2))).toEqual([[1,4],[9,16]]);
 });
 
 

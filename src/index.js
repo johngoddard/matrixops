@@ -6,14 +6,14 @@ const matrixElementCalc = (matrix1, matrix2, callback) => {
   if(dimMatch && matrix1[0] instanceof Array){
     let result = [];
     matrix1.forEach((row, rowIdx) => {
-      let newRow = row.map((el, idx) => {
-        return callback(el, matrix2[rowIdx][idx]);
+      let newRow = row.map((el, colIdx) => {
+        return callback(el, matrix2[rowIdx][colIdx], rowIdx, colIdx);
       });
       result.push(newRow);
     });
     return result;
   }else if (dimMatch){
-    return matrix1.map((el, idx) => callback(el, matrix2[idx]));
+    return matrix1.map((el, idx) => callback(el, matrix2[idx], idx));
   } else{
     throw 'can not peform arithmetic on matrices';
   }
@@ -22,14 +22,14 @@ const matrixElementCalc = (matrix1, matrix2, callback) => {
 const elementTransform = (matrix, callback) => {
   if(matrix[0] instanceof Array){
     let result = [];
-    matrix.forEach(row => {
-      let newRow = row.map(el => callback(el));
+    matrix.forEach((row, rowIdx) => {
+      let newRow = row.map((el, colIdx) => callback(el, rowIdx, colIdx));
       result.push(newRow);
     });
 
     return result;
   } else{
-    return matrix.map(el => callback(el));
+    return matrix.map((el, idx) => callback(el, idx));
   }
 };
 
