@@ -1,8 +1,14 @@
 #MatrixOps
 
-MatrixOps is an npm package that makes performing matrix operations on 2 dimensional JavaScript arrays simple.
+MatrixOps is an npm package that makes performing matrix operations on 2 dimensional JavaScript arrays simple. It also provides some convenience methods similar to what might be found in a statistical language like MATLAB or Octave.
 
 ## Usage
+To install matrixops, simply run:
+
+```JavaScript
+  npm install matrixops
+```
+
 ### #add
 
 Accepts 2-dimensional arrays, 1-dimensional arrays, and numbers, and adds them together, returning a new array.
