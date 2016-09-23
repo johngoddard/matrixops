@@ -60,15 +60,15 @@ test('#elementTransform pointwise raising matrix', () => {
   expect(operator.elementTransform([[1,2],[3,4]], el => Math.pow(el, 2))).toEqual([[1,4],[9,16]]);
 });
 
-test('#matrixElementCalc 2 matrix pointwise multiplication', () => {
+test('#matrixElementCalc (deprecated) 2 matrix pointwise multiplication', () => {
   expect(operator.matrixElementCalc([[1,2],[3,4]], [[1,2],[3,4]], (el1, el2) => el1 * el2)).toEqual([[1,4],[9,16]]);
 });
 
-test('#matrixElementCalc 2 matrix pointwise multiplication - with index', () => {
+test('#matrixElementCalc (deprecated) 2 matrix pointwise multiplication - with index', () => {
   expect(operator.matrixElementCalc([[1,2],[3,4]], [[1,2],[3,4]], (el1, el2, row, col) => el1 * el2 + row + col)).toEqual([[1,5],[10,18]]);
 });
 
-test('#matrixElementCalc 2 vector pointwise multiplication', () => {
+test('#matrixElementCalc (deprecated) 2 vector pointwise multiplication', () => {
   expect(operator.matrixElementCalc([1,2,3], [1,2,3], (el1, el2) => el1 * el2)).toEqual([1,4,9]);
 });
 
@@ -76,7 +76,21 @@ test('#matrixElementCalc 2 vector pointwise multiplication - with index', () => 
   expect(operator.matrixElementCalc([1,2,3], [1,2,3], (el1, el2, idx) => el1 * el2 + idx)).toEqual([1,5,11]);
 });
 
+test('#elByElCalc 2 matrix pointwise multiplication', () => {
+  expect(operator.elByElCalc([[1,2],[3,4]], [[1,2],[3,4]], (el1, el2) => el1 * el2)).toEqual([[1,4],[9,16]]);
+});
 
+test('#elByElCalc 2 matrix pointwise multiplication - with index', () => {
+  expect(operator.elByElCalc([[1,2],[3,4]], [[1,2],[3,4]], (el1, el2, row, col) => el1 * el2 + row + col)).toEqual([[1,5],[10,18]]);
+});
+
+test('#elByElCalc 2 vector pointwise multiplication', () => {
+  expect(operator.elByElCalc([1,2,3], [1,2,3], (el1, el2) => el1 * el2)).toEqual([1,4,9]);
+});
+
+test('#elByElCalc 2 vector pointwise multiplication - with index', () => {
+  expect(operator.elByElCalc([1,2,3], [1,2,3], (el1, el2, idx) => el1 * el2 + idx)).toEqual([1,5,11]);
+});
 
 test('#subtract subtracts a scalar from a matrix', () => {
   expect(operator.subtract([[1,2],[3,4]], 5)).toEqual([[-4,-3],[-2, -1]]);

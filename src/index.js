@@ -1,6 +1,7 @@
 const util = require('./util.js');
 
-const matrixElementCalc = (matrix1, matrix2, callback) => {
+
+const elByElCalc = (matrix1, matrix2, callback) => {
   let dimMatch = util.verifyDimensions(matrix1, matrix2);
 
   if(dimMatch && matrix1.every(el => el instanceof Array)){
@@ -17,6 +18,10 @@ const matrixElementCalc = (matrix1, matrix2, callback) => {
   } else{
     throw 'can not peform arithmetic on matrices';
   }
+};
+
+const matrixElementCalc = (matrix1, matrix2, callback) => {
+  return elByElCalc(matrix1, matrix2, callback);
 };
 
 const elementTransform = (matrix, callback) => {
@@ -38,7 +43,7 @@ const add = (arg1, arg2) => {
     let dimMatch = util.verifyDimensions(arg1, arg2);
 
     if(dimMatch && arg1.every(el => el instanceof Array)){
-      return matrixElementCalc(arg1, arg2, (el1, el2) => el1 + el2);
+      return elByElCalc(arg1, arg2, (el1, el2) => el1 + el2);
     } else if (dimMatch){
       return arg1.map((el, idx) => el + arg2[idx]);
     }
@@ -274,5 +279,6 @@ module.exports = {
   rowMeans,
   colMeans,
   rowStdDevs,
-  colStdDevs
+  colStdDevs,
+  elByElCalc
 };

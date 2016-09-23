@@ -5,9 +5,15 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 var util = require('./util.js');
 
 var matrixElementCalc = function matrixElementCalc(matrix1, matrix2, callback) {
+  elByElCalc(matrix1, matrix2, callback);
+};
+
+var elByElCalc = function elByElCalc(matrix1, matrix2, callback) {
   var dimMatch = util.verifyDimensions(matrix1, matrix2);
 
-  if (dimMatch && matrix1[0] instanceof Array) {
+  if (dimMatch && matrix1.every(function (el) {
+    return el instanceof Array;
+  })) {
     var _ret = function () {
       var result = [];
       matrix1.forEach(function (row, rowIdx) {
@@ -32,7 +38,9 @@ var matrixElementCalc = function matrixElementCalc(matrix1, matrix2, callback) {
 };
 
 var elementTransform = function elementTransform(matrix, callback) {
-  if (matrix[0] instanceof Array) {
+  if (matrix.every(function (el) {
+    return el instanceof Array;
+  })) {
     var _ret2 = function () {
       var result = [];
       matrix.forEach(function (row, rowIdx) {
@@ -59,7 +67,9 @@ var add = function add(arg1, arg2) {
   if (arg1 instanceof Array && arg2 instanceof Array) {
     var dimMatch = util.verifyDimensions(arg1, arg2);
 
-    if (dimMatch && arg1[0] instanceof Array) {
+    if (dimMatch && arg1.every(function (el) {
+      return el instanceof Array;
+    })) {
       return matrixElementCalc(arg1, arg2, function (el1, el2) {
         return el1 + el2;
       });
@@ -86,7 +96,11 @@ var add = function add(arg1, arg2) {
 var multiply = function multiply(arg1, arg2) {
   if (arg1 instanceof Array && arg2 instanceof Array) {
     var dimMatch = util.multDimMatch(arg1, arg2);
-    if (dimMatch && arg1[0] instanceof Array && arg2[0] instanceof Array) {
+    if (dimMatch && arg1.every(function (el) {
+      return el instanceof Array;
+    }) && arg2.every(function (el) {
+      return el instanceof Array;
+    })) {
       var result = [];
       for (var i = 0; i < arg1.length; i++) {
         var resRow = [];
@@ -106,7 +120,9 @@ var multiply = function multiply(arg1, arg2) {
       }
 
       return result;
-    } else if (dimMatch && arg1[0] instanceof Array) {
+    } else if (dimMatch && arg1.every(function (el) {
+      return el instanceof Array;
+    })) {
       var _ret4 = function () {
         var result = [];
 
@@ -120,7 +136,9 @@ var multiply = function multiply(arg1, arg2) {
       }();
 
       if ((typeof _ret4 === 'undefined' ? 'undefined' : _typeof(_ret4)) === "object") return _ret4.v;
-    } else if (dimMatch && arg2[0] instanceof Array) {
+    } else if (dimMatch && arg2.every(function (el) {
+      return el instanceof Array;
+    })) {
       var _result = [];
 
       var _loop2 = function _loop2(_i) {
@@ -161,7 +179,9 @@ var subtract = function subtract(arg1, arg2) {
 
   if (!(arg1 instanceof Array) && arg2 instanceof Array) {
     throw 'cannot not subtract matrix from scalar';
-  } else if (arg2 instanceof Array && arg2[0] instanceof Array) {
+  } else if (arg2 instanceof Array && arg2.every(function (el) {
+    return el instanceof Array;
+  })) {
 
     toSubtract = elementTransform(arg2, function (el) {
       return -el;
@@ -178,7 +198,9 @@ var subtract = function subtract(arg1, arg2) {
 };
 
 var transpose = function transpose(matrix) {
-  var isMatrix = matrix[0] instanceof Array;
+  var isMatrix = matrix.every(function (el) {
+    return el instanceof Array;
+  });
 
   if (isMatrix) {
     var result = [];
@@ -238,6 +260,86 @@ var identity = function identity(num) {
   return identityMatrix;
 };
 
+var equals = function equals(matrix1, matrix2) {
+  if (!util.verifyDimensions(matrix1, matrix2)) {
+    return false;
+  }
+
+  var equal = true;
+
+  if (matrix1.every(function (el) {
+    return el instanceof Array;
+  })) {
+    matrix1.forEach(function (row, rowIdx) {
+      row.forEach(function (el, colIdx) {
+        if (el !== matrix2[rowIdx][colIdx]) {
+          equal = false;
+        }
+      });
+    });
+  } else {
+    matrix1.forEach(function (el, idx) {
+      if (el !== matrix2[idx]) {
+        equal = false;
+      }
+    });
+  }
+
+  return equal;
+};
+
+var rowMeans = function rowMeans(matrix) {
+  return _getMeans(matrix);
+};
+
+var colMeans = function colMeans(matrix) {
+  return _getMeans(transpose(matrix));
+};
+
+var _getMeans = function _getMeans(matrix) {
+  var means = [];
+  matrix.forEach(function (row) {
+    if (!(row instanceof Array)) {
+      throw 'can only calculate means for matrices';
+    }
+    means.push(row.reduce(function (pre, curr) {
+      return pre + curr;
+    }, 0) / row.length);
+  });
+
+  return means;
+};
+
+var rowStdDevs = function rowStdDevs(matrix) {
+  return _getStdDevs(matrix);
+};
+
+var colStdDevs = function colStdDevs(matrix) {
+  return _getStdDevs(transpose(matrix));
+};
+
+var _getStdDevs = function _getStdDevs(matrix) {
+  var stdDevs = [];
+  var means = rowMeans(matrix);
+
+  matrix.forEach(function (row, idx) {
+    if (!(row instanceof Array)) {
+      throw 'can only calculate means for matrices';
+    }
+    var diffs = subtract(row, means[idx]);
+    var squareDiffs = elementTransform(diffs, function (el) {
+      return Math.pow(el, 2);
+    });
+    var squareDiffSum = squareDiffs.reduce(function (pre, curr) {
+      return pre + curr;
+    }, 0);
+
+    stdDevs.push(Math.sqrt(squareDiffSum / row.length));
+  });
+
+  return stdDevs;
+};
+
 module.exports = {
   add: add,
   elementTransform: elementTransform,
@@ -247,5 +349,10 @@ module.exports = {
   transpose: transpose,
   zeroes: zeroes,
   ones: ones,
-  identity: identity
+  identity: identity,
+  equals: equals,
+  rowMeans: rowMeans,
+  colMeans: colMeans,
+  rowStdDevs: rowStdDevs,
+  colStdDevs: colStdDevs
 };
