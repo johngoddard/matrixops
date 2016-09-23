@@ -72,7 +72,7 @@ test('#matrixElementCalc (deprecated) 2 vector pointwise multiplication', () => 
   expect(operator.matrixElementCalc([1,2,3], [1,2,3], (el1, el2) => el1 * el2)).toEqual([1,4,9]);
 });
 
-test('#matrixElementCalc 2 vector pointwise multiplication - with index', () => {
+test('#matrixElementCalc (deprecated) 2 vector pointwise multiplication - with index', () => {
   expect(operator.matrixElementCalc([1,2,3], [1,2,3], (el1, el2, idx) => el1 * el2 + idx)).toEqual([1,5,11]);
 });
 
