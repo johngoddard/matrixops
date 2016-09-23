@@ -3,7 +3,7 @@ const util = require('./util.js');
 const matrixElementCalc = (matrix1, matrix2, callback) => {
   let dimMatch = util.verifyDimensions(matrix1, matrix2);
 
-  if(dimMatch && matrix1[0] instanceof Array){
+  if(dimMatch && matrix1.every(el => el instanceof Array)){
     let result = [];
     matrix1.forEach((row, rowIdx) => {
       let newRow = row.map((el, colIdx) => {
@@ -20,7 +20,7 @@ const matrixElementCalc = (matrix1, matrix2, callback) => {
 };
 
 const elementTransform = (matrix, callback) => {
-  if(matrix[0] instanceof Array){
+  if(matrix.every(el => el instanceof Array)){
     let result = [];
     matrix.forEach((row, rowIdx) => {
       let newRow = row.map((el, colIdx) => callback(el, rowIdx, colIdx));
@@ -37,7 +37,7 @@ const add = (arg1, arg2) => {
   if(arg1 instanceof Array && arg2 instanceof Array){
     let dimMatch = util.verifyDimensions(arg1, arg2);
 
-    if(dimMatch && arg1[0] instanceof Array){
+    if(dimMatch && arg1.every(el => el instanceof Array)){
       return matrixElementCalc(arg1, arg2, (el1, el2) => el1 + el2);
     } else if (dimMatch){
       return arg1.map((el, idx) => el + arg2[idx]);
@@ -57,7 +57,7 @@ const add = (arg1, arg2) => {
 const multiply = (arg1, arg2) => {
   if(arg1 instanceof Array && arg2 instanceof Array){
     let dimMatch = util.multDimMatch(arg1, arg2);
-    if(dimMatch && arg1[0] instanceof Array && arg2[0] instanceof Array){
+    if(dimMatch && arg1.every(el => el instanceof Array) && arg2.every(el => el instanceof Array)){
       let result = [];
       for (let i = 0; i < arg1.length; i++) {
         let resRow = [];
@@ -72,7 +72,7 @@ const multiply = (arg1, arg2) => {
       }
 
       return result;
-    } else if (dimMatch && arg1[0] instanceof Array){
+    } else if (dimMatch && arg1.every(el => el instanceof Array)){
       let result = [];
 
       arg1.forEach(row => {
@@ -80,7 +80,7 @@ const multiply = (arg1, arg2) => {
       });
 
       return result;
-    } else if (dimMatch && arg2[0] instanceof Array){
+    } else if (dimMatch && arg2.every(el => el instanceof Array)){
       let result = [];
 
       for (let i = 0; i < arg2[0].length; i++) {
@@ -113,7 +113,7 @@ const subtract = (arg1, arg2) => {
 
   if(!(arg1 instanceof Array) && arg2 instanceof Array){
     throw 'cannot not subtract matrix from scalar';
-  } else if(arg2 instanceof Array && arg2[0] instanceof Array){
+  } else if(arg2 instanceof Array && arg2.every(el => el instanceof Array)){
 
     toSubtract = elementTransform(arg2, el => -el);
   } else if (arg2 instanceof Array) {
@@ -126,7 +126,7 @@ const subtract = (arg1, arg2) => {
 };
 
 const transpose = matrix => {
-  let isMatrix = matrix[0] instanceof Array;
+  let isMatrix = matrix.every(el => el instanceof Array);
 
   if(isMatrix){
     let result = [];
@@ -193,7 +193,7 @@ const equals = (matrix1, matrix2) => {
 
   let equal = true;
 
-  if(matrix1[0] instanceof Array){
+  if(matrix1.every(el => el instanceof Array)){
     matrix1.forEach((row, rowIdx) => {
       row.forEach((el, colIdx) => {
         if(el !== matrix2[rowIdx][colIdx]){
