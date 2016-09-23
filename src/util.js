@@ -6,7 +6,7 @@ module.exports = {
       let rows = matrix1.length;
       let cols = matrix1[0].length;
 
-      if(matrix2.every(el => el instanceof Array) && matrix2[0].length === cols && matrix2.length === rows){
+      if(matrix2.every(el => el instanceof Array) && matrix2.every(el => el.length === cols) && matrix2.length === rows){
         return true;
       } else{
         return false;
