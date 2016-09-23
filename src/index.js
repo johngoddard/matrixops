@@ -186,16 +186,93 @@ const identity = num => {
   return identityMatrix;
 };
 
+const equals = (matrix1, matrix2) => {
+  if(!(util.verifyDimensions(matrix1, matrix2))){
+    return false;
+  }
+
+  let equal = true;
+
+  if(matrix1[0] instanceof Array){
+    matrix1.forEach((row, rowIdx) => {
+      row.forEach((el, colIdx) => {
+        if(el !== matrix2[rowIdx][colIdx]){
+          equal = false;
+        }
+      });
+    });
+  } else {
+    matrix1.forEach((el, idx) => {
+      if(el !== matrix2[idx]){
+        equal = false;
+      }
+    });
+  }
+
+  return equal;
+};
+
+const rowMeans = matrix => {
+  return _getMeans(matrix);
+};
+
+const colMeans = matrix => {
+  return _getMeans(transpose(matrix));
+};
+
+const _getMeans = matrix => {
+  const means = [];
+  matrix.forEach(row => {
+    if(!(row instanceof Array)){
+      throw 'can only calculate means for matrices';
+    }
+    means.push(row.reduce((pre, curr) => pre + curr, 0) / row.length);
+  });
+
+  return means;
+};
+
+const rowStdDevs = matrix => {
+  return _getStdDevs(matrix);
+};
+
+const colStdDevs = matrix => {
+  return _getStdDevs(transpose(matrix));
+};
+
+const _getStdDevs = matrix => {
+  const stdDevs = [];
+  const means = rowMeans(matrix);
+
+  matrix.forEach((row, idx) => {
+    if(!(row instanceof Array)){
+      throw 'can only calculate means for matrices';
+    }
+    const diffs = subtract(row, means[idx]);
+    const squareDiffs = elementTransform(diffs, el => Math.pow(el, 2));
+    const squareDiffSum = squareDiffs.reduce((pre, curr) => pre + curr, 0);
+
+
+    stdDevs.push(Math.sqrt(squareDiffSum / row.length));
+  });
+
+  return stdDevs;
+};
 
 
 module.exports = {
-  add: add,
-  elementTransform: elementTransform,
-  matrixElementCalc: matrixElementCalc,
-  multiply: multiply,
-  subtract: subtract,
-  transpose: transpose,
-  zeroes: zeroes,
-  ones: ones,
-  identity: identity
+  add,
+  elementTransform,
+  matrixElementCalc,
+  multiply,
+  subtract,
+  transpose,
+  zeroes,
+  ones,
+  identity,
+  equals,
+  rowMeans,
+  colMeans,
+  rowStdDevs,
+  colStdDevs
 };
