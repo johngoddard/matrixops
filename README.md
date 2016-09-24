@@ -37,7 +37,7 @@ Accepts 2-dimensional arrays, 1-dimensional arrays, and numbers, and subtracts t
 
 ### #multiply
 
-2-dimensional arrays, 1-dimensional arrays, and numbers, and multiplies them together, returning a new array.
+Accepts 2-dimensional arrays, 1-dimensional arrays, and numbers, and multiplies them together, returning a new array.
 
 ```JavaScript
   MatrixOps.multiply([[1, 2, 3], [4, 5, 6]], [[1,2],[3,4],[5,6]]);

@@ -4,10 +4,6 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 var util = require('./util.js');
 
-var matrixElementCalc = function matrixElementCalc(matrix1, matrix2, callback) {
-  elByElCalc(matrix1, matrix2, callback);
-};
-
 var elByElCalc = function elByElCalc(matrix1, matrix2, callback) {
   var dimMatch = util.verifyDimensions(matrix1, matrix2);
 
@@ -35,6 +31,10 @@ var elByElCalc = function elByElCalc(matrix1, matrix2, callback) {
   } else {
     throw 'can not peform arithmetic on matrices';
   }
+};
+
+var matrixElementCalc = function matrixElementCalc(matrix1, matrix2, callback) {
+  return elByElCalc(matrix1, matrix2, callback);
 };
 
 var elementTransform = function elementTransform(matrix, callback) {
@@ -70,7 +70,7 @@ var add = function add(arg1, arg2) {
     if (dimMatch && arg1.every(function (el) {
       return el instanceof Array;
     })) {
-      return matrixElementCalc(arg1, arg2, function (el1, el2) {
+      return elByElCalc(arg1, arg2, function (el1, el2) {
         return el1 + el2;
       });
     } else if (dimMatch) {
@@ -354,5 +354,6 @@ module.exports = {
   rowMeans: rowMeans,
   colMeans: colMeans,
   rowStdDevs: rowStdDevs,
-  colStdDevs: colStdDevs
+  colStdDevs: colStdDevs,
+  elByElCalc: elByElCalc
 };
