@@ -14,6 +14,6 @@ module.exports = {
   multDimMatch: (matrix1, matrix2) =>    
   // if matrix 1 is a 2D Array, return length of first element, or if both are scalars,  check if the lengths match
     matrix1.every(el => el instanceof Array) ? matrix1[0].length : matrix1.length === matrix2.length,
-  // 
+  // For each element in the row, multiply each value in the column (For Matrix multiplication)
   multRowCol: (row, col) => row.reduce((accum, el,idx)=> accum += (el * col[idx]) ,0) 
 };
